@@ -1,0 +1,7 @@
+{
+  "name": "Al-Bayan (البيان)",
+  "description": "A modern, civilized Islamic reference application for Fatwas, Quranic search, and Fiqh scholarship comparison.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
