@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BookOpen, Scale, Calendar, Heart, ChevronLeft, ScrollText, Clock, Trash2, ChevronDown, X, Library, Hourglass } from 'lucide-react';
+import { BookOpen, Scale, Heart, ChevronLeft, ScrollText, Clock, Trash2, ChevronDown, X, Library, Hourglass, GraduationCap } from 'lucide-react';
 import { AppView, QueryMode, Language } from '../types';
 import { getHistory, HistoryItem, clearHistory, removeFromHistory } from '../utils/historyUtils';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -29,7 +29,6 @@ const VERSES_LIST: Verse[] = [
 ];
 
 export const HomeView: React.FC<HomeViewProps> = ({ onNavigate, onTopicClick }) => {
-  const [hijriDate, setHijriDate] = useState('');
   const [dailyVerse, setDailyVerse] = useState<Verse>(VERSES_LIST[0]);
   const [isLiked, setIsLiked] = useState(false);
   const [history, setHistory] = useState<HistoryItem[]>([]);
@@ -37,21 +36,6 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate, onTopicClick }) 
   const { t, language, setLanguage, dir } = useLanguage();
 
   useEffect(() => {
-    try {
-      let locale = 'ar-SA';
-      if (language === 'en') locale = 'en-US';
-      if (language === 'fr') locale = 'fr-FR';
-
-      const date = new Intl.DateTimeFormat(`${locale}-u-ca-islamic-umalqura`, {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric'
-      }).format(new Date());
-      setHijriDate(date);
-    } catch (e) {
-      setHijriDate(t.common.loading);
-    }
-
     const today = new Date().toDateString();
     const storedDate = localStorage.getItem('albayan_verse_date');
     
@@ -143,11 +127,11 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate, onTopicClick }) 
       action: () => onNavigate(AppView.HADITH)
     },
     {
-      title: t.home.calendarTitle,
-      desc: hijriDate || '...',
-      icon: Calendar,
-      color: 'bg-purple-100/90 text-purple-700',
-      action: () => onNavigate(AppView.CALENDAR)
+      title: t.home.scholarsTitle,
+      desc: t.home.scholarsDesc,
+      icon: GraduationCap,
+      color: 'bg-cyan-100/90 text-cyan-700',
+      action: () => onNavigate(AppView.SCHOLARS)
     }
   ];
 
@@ -160,6 +144,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate, onTopicClick }) 
     else if (item.mode === QueryMode.FATWA) onNavigate(AppView.FATWA);
     else if (item.mode === QueryMode.SUNNAH) onNavigate(AppView.SUNNAH);
     else if (item.mode === QueryMode.HISTORY) onNavigate(AppView.HISTORY);
+    else if (item.mode === QueryMode.SCHOLARS) onNavigate(AppView.SCHOLARS);
     else onNavigate(AppView.CHAT);
   };
 
@@ -170,6 +155,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate, onTopicClick }) 
       case QueryMode.HADITH: return t.chat.modes.hadith;
       case QueryMode.SUNNAH: return t.chat.modes.sunnah;
       case QueryMode.HISTORY: return t.chat.modes.history;
+      case QueryMode.SCHOLARS: return t.chat.modes.scholars;
       default: return t.chat.modes.general;
     }
   };
@@ -181,10 +167,9 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigate, onTopicClick }) 
           <img 
             src="https://img.freepik.com/free-vector/gradient-islamic-pattern-background_52683-118838.jpg?t=st=1710520000~exp=1710523600~hmac=abc123456" 
             alt="Islamic Background" 
-            className="w-full h-full object-cover opacity-10 dark:opacity-5"
+            className="w-full h-full object-cover opacity-0"
           />
-          {/* Gradient Overlay for Readability */}
-          <div className="absolute inset-0 bg-gradient-to-b from-slate-50/80 via-slate-50/60 to-slate-50/90 dark:from-slate-900/80 dark:via-slate-900/60 dark:to-slate-900/90"></div>
+          {/* Reverting to pattern by hiding image opacity to 0 but keeping structure to avoid breaking layout logic if any */}
       </div>
       
       {/* Language Toggle Row */}

@@ -38,6 +38,8 @@ const translations = {
       shareText: 'مشاركة النص',
       searchPlaceholder: 'اكتب سؤالك هنا...',
       noNotifications: 'لا توجد إشعارات حالياً',
+      shareAppNotification: 'فضلاً وليس أمراً، يرجى نشر التطبيق لتعم الفائدة',
+      justNow: 'الآن',
       typeToSearch: 'اكتب ما تبحث عنه...',
       startSearch: 'ابدأ البحث',
     },
@@ -59,8 +61,8 @@ const translations = {
       sunnahDesc: 'أبواب السنة المطهرة (عبادات، معاملات، أخلاق)',
       historyTitle: 'فقه التاريخ الإسلامي',
       historyDesc: 'أحداث التاريخ من المصادر المعتمدة',
-      calendarTitle: 'التقويم ومواقيت الصلاة',
-      calendarDesc: 'مواقيت الصلاة حسب الموقع',
+      scholarsTitle: 'علماء الإسلام',
+      scholarsDesc: 'تراجم العلماء حسب الاختصاصات',
     },
     chat: {
       welcome: 'أهلاً بك. أنا مساعدك الإسلامي "البيان". يمكنك سؤالي عن الفتاوى، أو البحث في القرآن الكريم، أو السنن النبوية. كيف يمكنني خدمتك اليوم؟',
@@ -71,6 +73,7 @@ const translations = {
         hadith: 'الحديث',
         sunnah: 'السنن',
         history: 'التاريخ',
+        scholars: 'العلماء',
       },
       placeholders: {
         general: 'اكتب سؤالك هنا...',
@@ -79,6 +82,7 @@ const translations = {
         hadith: 'تحقق من صحة حديث...',
         sunnah: 'ابحث في أبواب السنة...',
         history: 'ابحث في التاريخ الإسلامي...',
+        scholars: 'ابحث عن عالم أو اختصاص...',
       }
     },
     quran: {
@@ -164,21 +168,19 @@ const translations = {
         oaths: 'الأيمان',
       }
     },
-    calendar: {
-      title: 'التقويم ومواقيت الصلاة',
-      today: 'اليوم',
-      prayerTimes: 'مواقيت الصلاة',
-      upcomingEvents: 'المناسبات القادمة',
-      locationPermission: 'يرجى تفعيل خدمة الموقع لعرض المواقيت',
-      locating: 'جاري تحديد الموقع...',
-      day: 'يوم',
-      times: {
-        Fajr: 'الفجر',
-        Sunrise: 'الشروق',
-        Dhuhr: 'الظهر',
-        Asr: 'العصر',
-        Maghrib: 'المغرب',
-        Isha: 'العشاء',
+    scholars: {
+      title: 'علماء الإسلام',
+      searchPlaceholder: 'ابحث عن عالم (مثلاً: البخاري، ابن سينا)...',
+      fieldsTitle: 'الاختصاصات العلمية',
+      fields: {
+        tafsir: 'أئمة التفسير',
+        hadith: 'أئمة الحديث',
+        fiqh: 'أئمة الفقه',
+        aqeedah: 'أئمة العقيدة',
+        science: 'الطب والعلوم',
+        language: 'اللغة والأدب',
+        history: 'التاريخ والسير',
+        sufism: 'التزكية والسلوك'
       }
     },
     settings: {
@@ -195,6 +197,7 @@ const translations = {
       privacy: 'سياسة الخصوصية',
       faq: 'المساعدة والأسئلة الشائعة',
       logout: 'تسجيل الخروج',
+      shareApp: 'مشاركة التطبيق',
       version: 'الإصدار 1.2.0 (البيان)',
       notFound: 'لم تجد إجابة لسؤالك؟',
       contactSupport: 'تواصل مع الدعم الفني',
@@ -206,10 +209,7 @@ const translations = {
       2. التخزين المحلي:
       يتم تخزين سجل البحث، الموضوعات المفضلة، وإعدادات التطبيق (مثل الوضع الداكن واللغة) محلياً على جهازك فقط باستخدام تقنية LocalStorage. هذه البيانات لا تغادر جهازك أبداً.
 
-      3. الموقع الجغرافي:
-      نطلب صلاحية الوصول للموقع الجغرافي فقط عند فتح "التقويم" لحساب مواقيت الصلاة بدقة بناءً على موقعك. لا يتم تخزين إحداثياتك أو إرسالها لأي خادم تتبع.
-
-      4. الذكاء الاصطناعي:
+      3. الذكاء الاصطناعي:
       عندما تطرح سؤالاً، يتم إرسال نص السؤال فقط إلى خوادم المعالجة للحصول على الإجابة، دون ربطها بأي معرف شخصي.`,
       faqList: [
         {
@@ -222,15 +222,11 @@ const translations = {
         },
         {
           q: 'هل يعمل التطبيق بدون إنترنت؟',
-          a: 'تتطلب ميزات المساعد الذكي (الشات، الفتاوى، تفسير القرآن) اتصالاً بالإنترنت للمعالجة. ومع ذلك، فإن سجل البحث الخاص بك وصفحة مواقيت الصلاة (بعد تحديثها) يعملان دون اتصال.'
+          a: 'تتطلب ميزات المساعد الذكي (الشات، الفتاوى، تفسير القرآن) اتصالاً بالإنترنت للمعالجة. ومع ذلك، فإن سجل البحث الخاص بك يعمل دون اتصال.'
         },
         {
           q: 'كيف يمكنني حذف سجل البحث؟',
           a: 'يمكنك حذف السجل كاملاً من الصفحة الرئيسية بالضغط على أيقونة "سلة المهملات" بجانب عنوان السجل، أو حذف عناصر فردية بالضغط على علامة (X) بجانب كل عنصر.'
-        },
-        {
-          q: 'لماذا تختلف مواقيت الصلاة عن توقيت المسجد؟',
-          a: 'نستخدم طرق حساب فلكية دقيقة بناءً على موقعك. قد يكون هناك فرق بسيط بدقائق معدودة حسب طريقة الحساب المعتمدة في مسجدك (مثلاً أم القرى مقابل رابطة العالم الإسلامي).'
         }
       ]
     }
@@ -262,6 +258,8 @@ const translations = {
       shareText: 'Share Text',
       searchPlaceholder: 'Type your question here...',
       noNotifications: 'No notifications',
+      shareAppNotification: 'Please kindly share the app to spread knowledge',
+      justNow: 'Now',
       typeToSearch: 'Type to search...',
       startSearch: 'Search',
     },
@@ -283,8 +281,8 @@ const translations = {
       sunnahDesc: 'Chapters of Sunnah (Worship, Manners)',
       historyTitle: 'Islamic History',
       historyDesc: 'Events from authentic sources',
-      calendarTitle: 'Calendar & Prayers',
-      calendarDesc: 'Prayer times based on location',
+      scholarsTitle: 'Islamic Scholars',
+      scholarsDesc: 'Biographies by specialization',
     },
     chat: {
       welcome: 'Welcome. I am "Al-Bayan". You can ask me about Fatwas, Quran, Sunnah, or Fiqh issues. How can I help you today?',
@@ -295,6 +293,7 @@ const translations = {
         hadith: 'Hadith',
         sunnah: 'Sunnah',
         history: 'History',
+        scholars: 'Scholars',
       },
       placeholders: {
         general: 'Type your question here...',
@@ -303,6 +302,7 @@ const translations = {
         hadith: 'Verify a Hadith...',
         sunnah: 'Search in Sunnah chapters...',
         history: 'Search Islamic history...',
+        scholars: 'Search for a scholar or field...',
       }
     },
     quran: {
@@ -388,21 +388,19 @@ const translations = {
         oaths: 'Oaths',
       }
     },
-    calendar: {
-      title: 'Calendar & Prayer Times',
-      today: 'Today',
-      prayerTimes: 'Prayer Times',
-      upcomingEvents: 'Upcoming Events',
-      locationPermission: 'Please enable location to see prayer times',
-      locating: 'Locating...',
-      day: 'Day',
-      times: {
-        Fajr: 'Fajr',
-        Sunrise: 'Sunrise',
-        Dhuhr: 'Dhuhr',
-        Asr: 'Asr',
-        Maghrib: 'Maghrib',
-        Isha: 'Isha',
+    scholars: {
+      title: 'Islamic Scholars',
+      searchPlaceholder: 'Search for a scholar (e.g. Bukhari, Ibn Sina)...',
+      fieldsTitle: 'Fields of Knowledge',
+      fields: {
+        tafsir: 'Imams of Tafsir',
+        hadith: 'Imams of Hadith',
+        fiqh: 'Imams of Fiqh',
+        aqeedah: 'Theology',
+        science: 'Medicine & Science',
+        language: 'Language & Poetry',
+        history: 'History & Biographies',
+        sufism: 'Spirituality'
       }
     },
     settings: {
@@ -419,6 +417,7 @@ const translations = {
       privacy: 'Privacy Policy',
       faq: 'FAQ & Help',
       logout: 'Log Out',
+      shareApp: 'Share App',
       version: 'Version 1.2.0 (Al-Bayan)',
       notFound: 'Didn\'t find an answer?',
       contactSupport: 'Contact Support',
@@ -430,10 +429,7 @@ const translations = {
       2. Local Storage:
       Search history, favorites, and app settings (like dark mode and language) are stored locally on your device only. This data never leaves your phone.
 
-      3. Geolocation:
-      We request location access only when opening the "Calendar" to calculate accurate prayer times based on your position. Your coordinates are not stored or sent to any tracking server.
-
-      4. Artificial Intelligence:
+      3. Artificial Intelligence:
       When you ask a question, only the text of the query is sent to processing servers to generate the answer, without linking it to any personal identifier.`,
       faqList: [
         {
@@ -446,15 +442,11 @@ const translations = {
         },
         {
           q: 'Does the app work offline?',
-          a: 'Smart assistant features (Chat, Fatwa, Quran interpretation) require an internet connection. However, your search history and prayer times (once updated) are available offline.'
+          a: 'Smart assistant features (Chat, Fatwa, Quran interpretation) require an internet connection. However, your search history is available offline.'
         },
         {
           q: 'How can I delete search history?',
           a: 'You can clear the entire history from the Home screen by tapping the "Trash" icon, or delete individual items by tapping the (X) next to them.'
-        },
-        {
-          q: 'Why are prayer times different from my mosque?',
-          a: 'We use accurate astronomical calculations based on your location. There might be a slight difference of a few minutes depending on the calculation method used by your local mosque.'
         }
       ]
     }
@@ -486,6 +478,8 @@ const translations = {
       shareText: 'Partager le texte',
       searchPlaceholder: 'Tapez votre question ici...',
       noNotifications: 'Aucune notification',
+      shareAppNotification: 'Veuillez s\'il vous plaît partager l\'application pour diffuser le savoir',
+      justNow: 'Maintenant',
       typeToSearch: 'Tapez pour rechercher...',
       startSearch: 'Rechercher',
     },
@@ -507,8 +501,8 @@ const translations = {
       sunnahDesc: 'Chapitres de la Sunna (Culte, Manières)',
       historyTitle: 'Histoire Islamique',
       historyDesc: 'Événements des sources authentiques',
-      calendarTitle: 'Calendrier & Prières',
-      calendarDesc: 'Horaires de prière basés sur la localisation',
+      scholarsTitle: 'Savants Musulmans',
+      scholarsDesc: 'Biographies par spécialisation',
     },
     chat: {
       welcome: 'Bienvenue. Je suis "Al-Bayan". Vous pouvez m\'interroger sur les Fatwas, rechercher dans le Coran, la Sunna, ou clarifier des questions de Fiqh. Comment puis-je vous aider ?',
@@ -519,6 +513,7 @@ const translations = {
         hadith: 'Hadith',
         sunnah: 'Sunna',
         history: 'Histoire',
+        scholars: 'Savants',
       },
       placeholders: {
         general: 'Tapez votre question ici...',
@@ -527,6 +522,7 @@ const translations = {
         hadith: 'Vérifiez un Hadith...',
         sunnah: 'Recherchez dans les chapitres de la Sunna...',
         history: 'Recherchez dans l\'histoire islamique...',
+        scholars: 'Recherchez un savant ou un domaine...',
       }
     },
     quran: {
@@ -612,21 +608,19 @@ const translations = {
         oaths: 'Serments',
       }
     },
-    calendar: {
-      title: 'Calendrier & Horaires de prière',
-      today: 'Aujourd\'hui',
-      prayerTimes: 'Horaires de prière',
-      upcomingEvents: 'Événements à venir',
-      locationPermission: 'Veuillez activer la localisation',
-      locating: 'Localisation...',
-      day: 'Jour',
-      times: {
-        Fajr: 'Fajr',
-        Sunrise: 'Lever du soleil',
-        Dhuhr: 'Dhuhr',
-        Asr: 'Asr',
-        Maghrib: 'Maghrib',
-        Isha: 'Isha',
+    scholars: {
+      title: 'Savants Musulmans',
+      searchPlaceholder: 'Recherchez un savant (ex: Boukhari, Ibn Sina)...',
+      fieldsTitle: 'Domaines de Connaissance',
+      fields: {
+        tafsir: 'Imams du Tafsir',
+        hadith: 'Imams du Hadith',
+        fiqh: 'Imams du Fiqh',
+        aqeedah: 'Théologie',
+        science: 'Médecine & Science',
+        language: 'Langue & Poésie',
+        history: 'Histoire & Biographies',
+        sufism: 'Spiritualité'
       }
     },
     settings: {
@@ -643,6 +637,7 @@ const translations = {
       privacy: 'Politique de Confidentialité',
       faq: 'FAQ & Aide',
       logout: 'Se déconnecter',
+      shareApp: 'Partager l\'application',
       version: 'Version 1.2.0 (Al-Bayan)',
       notFound: 'Vous n\'avez pas trouvé de réponse ?',
       contactSupport: 'Contacter le support',
@@ -654,10 +649,7 @@ const translations = {
       2. Stockage local :
       L'historique de recherche, les favoris et les paramètres sont stockés localement sur votre appareil. Ces données ne quittent jamais votre téléphone.
 
-      3. Géolocalisation :
-      Nous demandons l'accès à la localisation uniquement pour le "Calendrier" afin de calculer les horaires de prière. Vos coordonnées ne sont pas stockées.
-
-      4. Intelligence Artificielle :
+      3. Intelligence Artificielle :
       Seul le texte de votre question est envoyé aux serveurs de traitement pour générer la réponse, sans aucun lien avec votre identité.`,
       faqList: [
         {
@@ -670,15 +662,11 @@ const translations = {
         },
         {
           q: 'L\'application fonctionne-t-elle hors ligne ?',
-          a: 'Les fonctionnalités d\'IA (Chat, Fatwa) nécessitent Internet. L\'historique et les horaires de prière fonctionnent hors ligne.'
+          a: 'Les fonctionnalités d\'IA (Chat, Fatwa) nécessitent Internet. L\'historique fonctionne hors ligne.'
         },
         {
           q: 'Comment supprimer l\'historique ?',
           a: 'Vous pouvez effacer tout l\'historique depuis l\'écran d\'accueil ou supprimer des éléments individuellement.'
-        },
-        {
-          q: 'Pourquoi les horaires diffèrent-ils de ma mosquée ?',
-          a: 'Nous utilisons des calculs astronomiques basés sur votre position. Il peut y avoir une légère différence selon la méthode de calcul de votre mosquée.'
         }
       ]
     }

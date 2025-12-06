@@ -9,6 +9,124 @@ interface QuranViewProps {
   initialQuery?: string;
 }
 
+// Full list of 114 Surahs with translations
+const ALL_SURAHS = [
+  { id: 1, ar: "الفاتحة", en: "Al-Fatiha", fr: "Al-Fatiha" },
+  { id: 2, ar: "البقرة", en: "Al-Baqarah", fr: "Al-Baqara" },
+  { id: 3, ar: "آل عمران", en: "Ali 'Imran", fr: "Al-Imran" },
+  { id: 4, ar: "النساء", en: "An-Nisa", fr: "An-Nisa" },
+  { id: 5, ar: "المائدة", en: "Al-Ma'idah", fr: "Al-Ma'ida" },
+  { id: 6, ar: "الأنعام", en: "Al-An'am", fr: "Al-An'am" },
+  { id: 7, ar: "الأعراف", en: "Al-A'raf", fr: "Al-A'raf" },
+  { id: 8, ar: "الأنفال", en: "Al-Anfal", fr: "Al-Anfal" },
+  { id: 9, ar: "التوبة", en: "At-Tawbah", fr: "At-Tawba" },
+  { id: 10, ar: "يونس", en: "Yunus", fr: "Yunus" },
+  { id: 11, ar: "هود", en: "Hud", fr: "Hud" },
+  { id: 12, ar: "يوسف", en: "Yusuf", fr: "Yusuf" },
+  { id: 13, ar: "الرعد", en: "Ar-Ra'd", fr: "Ar-Ra'd" },
+  { id: 14, ar: "إبراهيم", en: "Ibrahim", fr: "Ibrahim" },
+  { id: 15, ar: "الحجر", en: "Al-Hijr", fr: "Al-Hijr" },
+  { id: 16, ar: "النحل", en: "An-Nahl", fr: "An-Nahl" },
+  { id: 17, ar: "الإسراء", en: "Al-Isra", fr: "Al-Isra" },
+  { id: 18, ar: "الكهف", en: "Al-Kahf", fr: "Al-Kahf" },
+  { id: 19, ar: "مريم", en: "Maryam", fr: "Maryam" },
+  { id: 20, ar: "طه", en: "Taha", fr: "Ta-Ha" },
+  { id: 21, ar: "الأنبياء", en: "Al-Anbiya", fr: "Al-Anbiya" },
+  { id: 22, ar: "الحج", en: "Al-Hajj", fr: "Al-Hajj" },
+  { id: 23, ar: "المؤمنون", en: "Al-Mu'minun", fr: "Al-Mu'minun" },
+  { id: 24, ar: "النور", en: "An-Nur", fr: "An-Nur" },
+  { id: 25, ar: "الفرقان", en: "Al-Furqan", fr: "Al-Furqan" },
+  { id: 26, ar: "الشعراء", en: "Ash-Shu'ara", fr: "Ash-Shu'ara" },
+  { id: 27, ar: "النمل", en: "An-Naml", fr: "An-Naml" },
+  { id: 28, ar: "القصص", en: "Al-Qasas", fr: "Al-Qasas" },
+  { id: 29, ar: "العنكبوت", en: "Al-Ankabut", fr: "Al-Ankabut" },
+  { id: 30, ar: "الروم", en: "Ar-Rum", fr: "Ar-Rum" },
+  { id: 31, ar: "لقمان", en: "Luqman", fr: "Luqman" },
+  { id: 32, ar: "السجدة", en: "As-Sajdah", fr: "As-Sajda" },
+  { id: 33, ar: "الأحزاب", en: "Al-Ahzab", fr: "Al-Ahzab" },
+  { id: 34, ar: "سبأ", en: "Saba", fr: "Saba" },
+  { id: 35, ar: "فاطر", en: "Fatir", fr: "Fatir" },
+  { id: 36, ar: "يس", en: "Ya-Sin", fr: "Ya-Sin" },
+  { id: 37, ar: "الصافات", en: "As-Saffat", fr: "As-Saffat" },
+  { id: 38, ar: "ص", en: "Sad", fr: "Sad" },
+  { id: 39, ar: "الزمر", en: "Az-Zumar", fr: "Az-Zumar" },
+  { id: 40, ar: "غافر", en: "Ghafir", fr: "Ghafir" },
+  { id: 41, ar: "فصلت", en: "Fussilat", fr: "Fussilat" },
+  { id: 42, ar: "الشورى", en: "Ash-Shura", fr: "Ash-Shura" },
+  { id: 43, ar: "الزخرف", en: "Az-Zukhruf", fr: "Az-Zukhruf" },
+  { id: 44, ar: "الدخان", en: "Ad-Dukhan", fr: "Ad-Dukhan" },
+  { id: 45, ar: "الجاثية", en: "Al-Jathiyah", fr: "Al-Jathiya" },
+  { id: 46, ar: "الأحقاف", en: "Al-Ahqaf", fr: "Al-Ahqaf" },
+  { id: 47, ar: "محمد", en: "Muhammad", fr: "Muhammad" },
+  { id: 48, ar: "الفتح", en: "Al-Fath", fr: "Al-Fath" },
+  { id: 49, ar: "الحجرات", en: "Al-Hujurat", fr: "Al-Hujurat" },
+  { id: 50, ar: "ق", en: "Qaf", fr: "Qaf" },
+  { id: 51, ar: "الذاريات", en: "Adh-Dhariyat", fr: "Adh-Dhariyat" },
+  { id: 52, ar: "الطور", en: "At-Tur", fr: "At-Tur" },
+  { id: 53, ar: "النجم", en: "An-Najm", fr: "An-Najm" },
+  { id: 54, ar: "القمر", en: "Al-Qamar", fr: "Al-Qamar" },
+  { id: 55, ar: "الرحمن", en: "Ar-Rahman", fr: "Ar-Rahman" },
+  { id: 56, ar: "الواقعة", en: "Al-Waqi'ah", fr: "Al-Waqi'a" },
+  { id: 57, ar: "الحديد", en: "Al-Hadid", fr: "Al-Hadid" },
+  { id: 58, ar: "المجادلة", en: "Al-Mujadila", fr: "Al-Mujadila" },
+  { id: 59, ar: "الحشر", en: "Al-Hashr", fr: "Al-Hashr" },
+  { id: 60, ar: "الممتحنة", en: "Al-Mumtahanah", fr: "Al-Mumtahina" },
+  { id: 61, ar: "الصف", en: "As-Saff", fr: "As-Saff" },
+  { id: 62, ar: "الجمعة", en: "Al-Jumu'ah", fr: "Al-Jumu'a" },
+  { id: 63, ar: "المنافقون", en: "Al-Munafiqun", fr: "Al-Munafiqun" },
+  { id: 64, ar: "التغابن", en: "At-Taghabun", fr: "At-Taghabun" },
+  { id: 65, ar: "الطلاق", en: "At-Talaq", fr: "At-Talaq" },
+  { id: 66, ar: "التحريم", en: "At-Tahrim", fr: "At-Tahrim" },
+  { id: 67, ar: "الملك", en: "Al-Mulk", fr: "Al-Mulk" },
+  { id: 68, ar: "القلم", en: "Al-Qalam", fr: "Al-Qalam" },
+  { id: 69, ar: "الحاقة", en: "Al-Haqqah", fr: "Al-Haqqa" },
+  { id: 70, ar: "المعارج", en: "Al-Ma'arij", fr: "Al-Ma'arij" },
+  { id: 71, ar: "نوح", en: "Nuh", fr: "Nuh" },
+  { id: 72, ar: "الجن", en: "Al-Jinn", fr: "Al-Jinn" },
+  { id: 73, ar: "المزمل", en: "Al-Muzzammil", fr: "Al-Muzzammil" },
+  { id: 74, ar: "المدثر", en: "Al-Muddaththir", fr: "Al-Muddaththir" },
+  { id: 75, ar: "القيامة", en: "Al-Qiyamah", fr: "Al-Qiyama" },
+  { id: 76, ar: "الإنسان", en: "Al-Insan", fr: "Al-Insan" },
+  { id: 77, ar: "المرسلات", en: "Al-Mursalat", fr: "Al-Mursalat" },
+  { id: 78, ar: "النبأ", en: "An-Naba", fr: "An-Naba" },
+  { id: 79, ar: "النازعات", en: "An-Nazi'at", fr: "An-Nazi'at" },
+  { id: 80, ar: "عبس", en: "Abasa", fr: "Abasa" },
+  { id: 81, ar: "التكوير", en: "At-Takwir", fr: "At-Takwir" },
+  { id: 82, ar: "الانفطار", en: "Al-Infitar", fr: "Al-Infitar" },
+  { id: 83, ar: "المطففين", en: "Al-Mutaffifin", fr: "Al-Mutaffifin" },
+  { id: 84, ar: "الانشقاق", en: "Al-Inshiqaq", fr: "Al-Inshiqaq" },
+  { id: 85, ar: "البروج", en: "Al-Buruj", fr: "Al-Buruj" },
+  { id: 86, ar: "الطارق", en: "At-Tariq", fr: "At-Tariq" },
+  { id: 87, ar: "الأعلى", en: "Al-A'la", fr: "Al-A'la" },
+  { id: 88, ar: "الغاشية", en: "Al-Ghashiyah", fr: "Al-Ghashiya" },
+  { id: 89, ar: "الفجر", en: "Al-Fajr", fr: "Al-Fajr" },
+  { id: 90, ar: "البلد", en: "Al-Balad", fr: "Al-Balad" },
+  { id: 91, ar: "الشمس", en: "Ash-Shams", fr: "Ash-Shams" },
+  { id: 92, ar: "الليل", en: "Al-Lail", fr: "Al-Lail" },
+  { id: 93, ar: "الضحى", en: "Ad-Duha", fr: "Ad-Duha" },
+  { id: 94, ar: "الشرح", en: "Ash-Sharh", fr: "Ash-Sharh" },
+  { id: 95, ar: "التين", en: "At-Tin", fr: "At-Tin" },
+  { id: 96, ar: "العلق", en: "Al-Alaq", fr: "Al-Alaq" },
+  { id: 97, ar: "القدر", en: "Al-Qadr", fr: "Al-Qadr" },
+  { id: 98, ar: "البينة", en: "Al-Bayyinah", fr: "Al-Bayyina" },
+  { id: 99, ar: "الزلزلة", en: "Az-Zalzalah", fr: "Az-Zalzala" },
+  { id: 100, ar: "العاديات", en: "Al-Adiyat", fr: "Al-Adiyat" },
+  { id: 101, ar: "القارعة", en: "Al-Qari'ah", fr: "Al-Qari'a" },
+  { id: 102, ar: "التكاثر", en: "At-Takathur", fr: "At-Takathur" },
+  { id: 103, ar: "العصر", en: "Al-Asr", fr: "Al-Asr" },
+  { id: 104, ar: "الهمزة", en: "Al-Humazah", fr: "Al-Humaza" },
+  { id: 105, ar: "الفيل", en: "Al-Fil", fr: "Al-Fil" },
+  { id: 106, ar: "قريش", en: "Quraysh", fr: "Quraysh" },
+  { id: 107, ar: "الماعون", en: "Al-Ma'un", fr: "Al-Ma'un" },
+  { id: 108, ar: "الكوثر", en: "Al-Kawthar", fr: "Al-Kawthar" },
+  { id: 109, ar: "الكافرون", en: "Al-Kafirun", fr: "Al-Kafirun" },
+  { id: 110, ar: "النصر", en: "An-Nasr", fr: "An-Nasr" },
+  { id: 111, ar: "المسد", en: "Al-Masad", fr: "Al-Masad" },
+  { id: 112, ar: "الإخلاص", en: "Al-Ikhlas", fr: "Al-Ikhlas" },
+  { id: 113, ar: "الفلق", en: "Al-Falaq", fr: "Al-Falaq" },
+  { id: 114, ar: "الناس", en: "An-Nas", fr: "An-Nas" }
+];
+
 export const QuranView: React.FC<QuranViewProps> = ({ initialQuery }) => {
   const [query, setQuery] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -30,12 +148,6 @@ export const QuranView: React.FC<QuranViewProps> = ({ initialQuery }) => {
     { name: t.quran.topics.patience, icon: '🌵' },
     { name: t.quran.topics.sustenance, icon: '🌾' },
     { name: t.quran.topics.supplication, icon: '✨' },
-  ];
-
-  // Popular Surahs for quick filter
-  const surahs = [
-    'Surah Al-Baqarah', 'Surah Al-Kahf', 'Surah Yasin', 'Surah Al-Mulk', 
-    'Surah Ar-Rahman', 'Surah Al-Waqi\'a', 'Surah Yusuf', 'Surah Maryam'
   ];
 
   const handleSearch = async (searchTerm: string = query) => {
@@ -216,6 +328,12 @@ export const QuranView: React.FC<QuranViewProps> = ({ initialQuery }) => {
     });
   };
 
+  const getSurahName = (surah: typeof ALL_SURAHS[0]) => {
+     if (language === 'ar') return surah.ar;
+     if (language === 'fr') return surah.fr;
+     return surah.en;
+  };
+
   return (
     <div className="flex flex-col h-[calc(100vh-8rem)]">
       {/* Search Header */}
@@ -273,31 +391,38 @@ export const QuranView: React.FC<QuranViewProps> = ({ initialQuery }) => {
                 ))}
               </div>
             ) : (
-              <div className="flex flex-wrap gap-2">
-                 {surahs.map((surah, idx) => (
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                 {ALL_SURAHS.map((surah) => (
                     <button
-                      key={idx}
-                      onClick={() => handleSearch(surah)}
-                      className="px-4 py-2 bg-white border border-slate-100 rounded-xl text-slate-700 hover:bg-emerald-50 hover:border-emerald-200 hover:text-emerald-700 transition-all text-sm font-quran"
+                      key={surah.id}
+                      onClick={() => handleSearch(language === 'ar' ? `سورة ${surah.ar}` : `Surah ${surah.en}`)}
+                      className="px-3 py-3 bg-white border border-slate-100 rounded-xl text-slate-700 hover:bg-emerald-50 hover:border-emerald-200 hover:text-emerald-700 transition-all text-sm flex items-center gap-2 text-start"
                     >
-                      {surah}
+                      <span className="w-6 h-6 flex items-center justify-center bg-slate-50 rounded-full text-[10px] text-slate-400 font-bold border border-slate-100 shrink-0">
+                        {surah.id}
+                      </span>
+                      <span className="font-quran text-base truncate">
+                        {getSurahName(surah)}
+                      </span>
                     </button>
                  ))}
               </div>
             )}
 
             {/* Quick Tip */}
-            <div className="mt-8 bg-emerald-50 rounded-xl p-4 flex gap-3 items-start border border-emerald-100">
-               <div className="p-1.5 bg-white rounded-full text-emerald-600 shadow-sm mt-0.5">
-                  <BookOpen size={14} />
-               </div>
-               <div>
-                  <h4 className="text-sm font-bold text-emerald-800 mb-1">{t.quran.tipTitle}</h4>
-                  <p className="text-xs text-emerald-700 leading-relaxed">
-                     {t.quran.tipText}
-                  </p>
-               </div>
-            </div>
+            {activeTab === 'topics' && (
+              <div className="mt-8 bg-emerald-50 rounded-xl p-4 flex gap-3 items-start border border-emerald-100">
+                <div className="p-1.5 bg-white rounded-full text-emerald-600 shadow-sm mt-0.5">
+                    <BookOpen size={14} />
+                </div>
+                <div>
+                    <h4 className="text-sm font-bold text-emerald-800 mb-1">{t.quran.tipTitle}</h4>
+                    <p className="text-xs text-emerald-700 leading-relaxed">
+                      {t.quran.tipText}
+                    </p>
+                </div>
+              </div>
+            )}
           </div>
         ) : (
           <div className="space-y-4">

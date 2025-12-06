@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Moon, Bell, Shield, HelpCircle, ChevronLeft, LogOut, ChevronDown, ChevronUp, Check, Sun, Type } from 'lucide-react';
+import { Moon, Bell, Shield, HelpCircle, ChevronLeft, ChevronDown, ChevronUp, Check, Sun, Type } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { FontSize } from '../types';
 
@@ -13,7 +13,7 @@ type SettingsPage = 'MAIN' | 'PRIVACY' | 'FAQ';
 export const SettingsView: React.FC<SettingsViewProps> = ({ isDarkMode, toggleTheme }) => {
   const [activePage, setActivePage] = useState<SettingsPage>('MAIN');
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
-  const { t, dir, fontSize, setFontSize } = useLanguage();
+  const { t, dir, fontSize, setFontSize, language } = useLanguage();
   
   // Accordion state for FAQ
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
@@ -35,6 +35,25 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ isDarkMode, toggleTh
 
   const handleFaqToggle = (index: number) => {
     setOpenFaqIndex(openFaqIndex === index ? null : index);
+  };
+
+  const shareApp = (platform: 'facebook' | 'whatsapp' | 'instagram') => {
+    const url = window.location.href;
+    const text = `Check out Al-Bayan Islamic App: ${url}`;
+    
+    switch (platform) {
+      case 'facebook':
+        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
+        break;
+      case 'whatsapp':
+        window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+        break;
+      case 'instagram':
+        // Instagram does not have a direct web share link for posts, so we copy the link
+        navigator.clipboard.writeText(url);
+        alert(t.common.copied);
+        break;
+    }
   };
 
   const faqItems = t.settings.faqList || [];
@@ -198,13 +217,52 @@ export const SettingsView: React.FC<SettingsViewProps> = ({ isDarkMode, toggleTh
           </div>
        </div>
 
-       <button className="w-full bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 p-4 rounded-2xl flex items-center justify-center gap-2 font-medium mt-8 hover:bg-red-100 dark:hover:bg-red-900/40 transition-colors border border-transparent dark:border-red-900/30">
-        <LogOut size={20} />
-        <span>{t.settings.logout}</span>
-      </button>
+       {/* Share App Section */}
+       <div className="mt-8 flex flex-col items-center">
+         <span className="text-sm font-medium text-slate-500 dark:text-slate-400 mb-4">{t.settings.shareApp}</span>
+         <div className="flex items-center justify-center gap-6">
+           {/* Facebook */}
+           <button 
+             onClick={() => shareApp('facebook')}
+             className="w-12 h-12 bg-[#1877F2] rounded-full flex items-center justify-center text-white shadow-lg shadow-blue-500/30 hover:scale-110 transition-transform"
+             title="Facebook"
+           >
+             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+             </svg>
+           </button>
+           
+           {/* WhatsApp */}
+           <button 
+             onClick={() => shareApp('whatsapp')}
+             className="w-12 h-12 bg-[#25D366] rounded-full flex items-center justify-center text-white shadow-lg shadow-green-500/30 hover:scale-110 transition-transform"
+             title="WhatsApp"
+           >
+             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"></path>
+             </svg>
+           </button>
 
-      <div className="text-center text-slate-400 text-xs mt-8 pb-4">
-        {t.settings.version}
+           {/* Instagram */}
+           <button 
+             onClick={() => shareApp('instagram')}
+             className="w-12 h-12 bg-gradient-to-tr from-[#F58529] via-[#DD2A7B] to-[#8134AF] rounded-full flex items-center justify-center text-white shadow-lg shadow-pink-500/30 hover:scale-110 transition-transform"
+             title="Instagram"
+           >
+             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+             </svg>
+           </button>
+         </div>
+       </div>
+
+      <div className="text-center text-slate-400 text-xs mt-8 pb-8">
+        <p>{t.settings.version}</p>
+        <p className="mt-2 opacity-80 font-medium">
+           {language === 'ar' ? 'المطور: K.Abdennour' : (language === 'fr' ? 'Développeur : K.Abdennour' : 'Developer: K.Abdennour')}
+        </p>
       </div>
     </div>
   );

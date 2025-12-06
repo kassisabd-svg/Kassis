@@ -6,10 +6,10 @@ export enum AppView {
   QURAN = 'QURAN',
   HADITH = 'HADITH',
   SUNNAH = 'SUNNAH',
-  HISTORY = 'HISTORY', // New View
+  HISTORY = 'HISTORY',
   FATWA = 'FATWA',
   SETTINGS = 'SETTINGS',
-  CALENDAR = 'CALENDAR'
+  SCHOLARS = 'SCHOLARS' // Replaces CALENDAR
 }
 
 export type Language = 'ar' | 'en' | 'fr';
@@ -30,7 +30,8 @@ export enum QueryMode {
   QURAN = 'quran',
   HADITH = 'hadith',
   SUNNAH = 'sunnah',
-  HISTORY = 'history' // New Mode
+  HISTORY = 'history',
+  SCHOLARS = 'scholars' // New Mode
 }
 
 export interface TopicCardProps {

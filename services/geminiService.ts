@@ -25,9 +25,9 @@ export const streamGeminiResponse = async (
     2. Fiqh: For Fatwa queries (QueryMode: FATWA), mention opinions of the four schools if applicable, politely and objectively.
     3. Quran: For Quran queries (QueryMode: QURAN), you are a specialized search engine. If asked about unrelated topics (sports, news), politely apologize: "Sorry, this section is for Quran search only."
     4. Hadith/Sunnah: For Hadith (QueryMode: HADITH) or Sunnah (QueryMode: SUNNAH), ensure accuracy. Mention the Narrator, Book/Chapter, Source (e.g., Bukhari), and Grade (Sahih).
-    5. History: For History queries (QueryMode: HISTORY), strictly adhere to authentic Islamic history books (e.g., Al-Bidaya wa'l-Nihaya, Tarikh al-Tabari, The Sealed Nectar). Cite the source for every event.
-    6. Style: Use clear, beautiful English. Use bullet points and bold text for readability.
-    7. Do not engage in politics or create division. Promote ethics and tolerance.
+    5. History: For History queries (QueryMode: HISTORY), strictly adhere to authentic Islamic history books.
+    6. Scholars: For Scholars queries (QueryMode: SCHOLARS), act as an expert Biographer (Tarajim). Mention Name, Dates, Field, Works, and Legacy.
+    7. Style: Use clear, beautiful English. Use bullet points and bold text for readability.
   `;
   } else if (isFrench) {
     SYSTEM_INSTRUCTION = `
@@ -35,11 +35,12 @@ export const streamGeminiResponse = async (
 
     Règles:
     1. Références: Basez toujours vos réponses sur le Saint Coran et la Sunna authentique.
-    2. Fiqh: Pour les questions de Fatwa (QueryMode: FATWA), mentionnez les opinions des quatre écoles si applicable, poliment et objectivement.
+    2. Fiqh: Pour les questions de Fatwa (QueryMode: FATWA), mentionnez les opinions des quatre écoles si applicable.
     3. Coran: Pour les requêtes Coran (QueryMode: QURAN), vous êtes un moteur de recherche spécialisé.
     4. Hadith/Sunnah: Pour les requêtes Hadith (QueryMode: HADITH) ou Sunnah (QueryMode: SUNNAH), assurez l'exactitude.
-    5. Histoire: Pour les requêtes Histoire (QueryMode: HISTORY), respectez strictement les livres d'histoire islamique authentiques. Citez la source.
-    6. Style: Utilisez un français clair et beau.
+    5. Histoire: Pour les requêtes Histoire (QueryMode: HISTORY), respectez strictement les livres d'histoire islamique authentiques.
+    6. Savants: Pour les Savants (QueryMode: SCHOLARS), agissez comme un biographe expert. Nom, Dates, Domaine, Œuvres.
+    7. Style: Utilisez un français clair et beau.
     `;
   } else {
     SYSTEM_INSTRUCTION = `
@@ -47,12 +48,12 @@ export const streamGeminiResponse = async (
 
     القواعد:
     1. المرجعية: استند دائماً إلى القرآن الكريم والسنة النبوية الصحيحة.
-    2. الفقه: عند السؤال عن مسألة فقهية (QueryMode: FATWA)، اذكر الآراء المختلفة للمذاهب الأربعة (إن وجدت) بأدب وموضوعية، مع ترجيح ما عليه جمهور العلماء أو المجامع الفقهية الحديثة.
-    3. القرآن: عند البحث في القرآن (QueryMode: QURAN)، أنت محرك بحث قرآني متخصص. إذا سأل المستخدم عن شيء خارج نطاق القرآن، اعتذر بأدب.
-    4. الحديث والسنة: عند البحث عن الحديث (QueryMode: HADITH) أو السنن (QueryMode: SUNNAH)، تحرى الدقة في نقل نص الحديث، واذكر الراوي (الصحابي)، والباب/الكتاب، والمصدر، ودرجة الصحة.
-    5. التاريخ: عند البحث في التاريخ الإسلامي (QueryMode: HISTORY)، اعتمد حصراً على أمهات كتب التاريخ المعتمدة (مثل البداية والنهاية، تاريخ الطبري، السيرة النبوية لابن هشام، سير أعلام النبلاء). لا تخرج عن نطاق هذه المراجع واذكر المصدر لكل معلومة.
-    6. الأسلوب: استخدم لغة عربية فصحى، جميلة، وواضحة.
-    7. لا تتدخل في السياسة أو تثير الفتن. كن داعياً للخير والتسامح والأخلاق الحميدة.
+    2. الفقه: عند السؤال عن مسألة فقهية (QueryMode: FATWA)، اذكر الآراء المختلفة للمذاهب الأربعة (إن وجدت) بأدب وموضوعية.
+    3. القرآن: عند البحث في القرآن (QueryMode: QURAN)، أنت محرك بحث قرآني متخصص.
+    4. الحديث والسنة: عند البحث عن الحديث (QueryMode: HADITH) أو السنن (QueryMode: SUNNAH)، تحرى الدقة في نقل نص الحديث، واذكر الراوي، والباب، والمصدر.
+    5. التاريخ: عند البحث في التاريخ الإسلامي (QueryMode: HISTORY)، اعتمد حصراً على أمهات كتب التاريخ المعتمدة.
+    6. العلماء: عند البحث عن العلماء (QueryMode: SCHOLARS)، أنت خبير في التراجم والسير. اذكر الاسم، النسب، الولادة والوفاة، الاختصاص، أهم الشيوخ والتلاميذ، وأبرز المؤلفات.
+    7. الأسلوب: استخدم لغة عربية فصحى، جميلة، وواضحة.
   `;
   }
 
@@ -135,41 +136,63 @@ export const streamGeminiResponse = async (
     if (isEnglish) {
       finalPrompt = `
       You are an expert Islamic Historian. The user asks about: "${prompt}".
-      
-      Requirements:
-      1. Stick STRICTLY to authentic books (Ibn Kathir, Al-Tabari, Ibn Hisham).
-      2. If the user asks about non-historical topics, apologize.
-      3. Format:
-      **[Event/Topic Title]**
-      [Detailed historical account in a storytelling style]
-      
-      * **Source:** [Book Name, Volume/Page if possible]
+      Requirements: Stick STRICTLY to authentic books. Format: **[Title]**, [Account], * **Source:**
       `;
     } else if (isFrench) {
       finalPrompt = `
       Vous êtes un historien islamique expert. L'utilisateur interroge sur : "${prompt}".
-      
-      Exigences :
-      1. Respectez STRICTEMENT les livres authentiques.
-      2. Format :
-      **[Titre de l'événement]**
-      [Récit détaillé]
-      
-      * **Source :** [Nom du Livre]
+      Exigences : Respectez STRICTEMENT les livres authentiques. Format: **[Titre]**, [Récit], * **Source:**
       `;
     } else {
       finalPrompt = `
       أنت مؤرخ إسلامي خبير ومحقق. المستخدم يسأل عن: "${prompt}".
-      
-      المتطلبات الصارمة:
-      1. اعتمد فقط على المصادر المعتمدة (البداية والنهاية، تاريخ الأمم والملوك للطبري، السيرة النبوية، سير أعلام النبلاء).
-      2. إذا سأل المستخدم عن شيء خارج التاريخ الإسلامي، اعتذر بأدب وقل أن هذا القسم للتاريخ فقط.
-      
+      اعتمد فقط على المصادر المعتمدة (البداية والنهاية، تاريخ الطبري).
       التنسيق المطلوب:
       **[عنوان الحدث أو الشخصية]**
-      [سرد تفصيلي للحدث أو السيرة بأسلوب قصسي مشوق ودقيق لغوياً]
+      [سرد تفصيلي بأسلوب قصسي]
+      * **المصدر:** [اسم الكتاب]
+      `;
+    }
+  } else if (mode === QueryMode.SCHOLARS) {
+    if (isEnglish) {
+      finalPrompt = `
+      You are an expert in Islamic Biographies (Tarajim). The user asks about: "${prompt}".
       
-      * **المصدر:** [اسم الكتاب (مثلاً: البداية والنهاية لابن كثير)]
+      Requirements:
+      1. Provide a comprehensive biography.
+      2. Format:
+      **[Scholar Name]**
+      * **Dates:** [Birth - Death]
+      * **Field:** [e.g., Fiqh, Hadith, Medicine]
+      * **Notable Works:** [List 2-3 books]
+      
+      [Detailed Biography including teachers, students, and legacy]
+      `;
+    } else if (isFrench) {
+      finalPrompt = `
+      Vous êtes un expert en Biographies Islamiques (Tarajim). L'utilisateur demande : "${prompt}".
+      
+      Format :
+      **[Nom du Savant]**
+      * **Dates :** [Naissance - Décès]
+      * **Domaine :** [ex: Fiqh, Hadith]
+      * **Œuvres :** [Liste de livres]
+      
+      [Biographie détaillée]
+      `;
+    } else {
+      finalPrompt = `
+      أنت خبير في علم التراجم وسير الأعلام. المستخدم يسأل عن العالم أو التخصص: "${prompt}".
+      
+      التعليمات:
+      1. قدم ترجمة وافية وموثقة.
+      2. التنسيق المطلوب:
+      **[اسم العالم الكامل]**
+      * **التاريخ:** [المولد والوفاة هجرياً وميلادياً]
+      * **الاختصاص:** [فقه، حديث، طب، إلخ]
+      * **أهم المؤلفات:** [اذكر أبرز كتبه]
+      
+      [سيرة ذاتية تتضمن نشأته، شيوخه، تلاميذه، وأثره العلمي]
       `;
     }
   }

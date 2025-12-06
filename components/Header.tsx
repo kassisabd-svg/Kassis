@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Bell, Search, X, Inbox, ArrowRight, ArrowLeft } from 'lucide-react';
+import { Bell, Search, X, Inbox, ArrowRight, ArrowLeft, HeartHandshake } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { AppView } from '../types';
 
@@ -51,11 +51,10 @@ export const Header: React.FC<HeaderProps> = ({ onNavigate, onSearch }) => {
   return (
     <>
       <header className="sticky top-0 bg-emerald-600/95 dark:bg-emerald-900/90 backdrop-blur-md text-white shadow-sm z-40 h-16 flex items-center justify-between px-4 border-b border-white/10 supports-[backdrop-filter]:bg-emerald-600/85 transition-colors duration-300">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center border border-white/30 backdrop-blur-sm">
-             <span className="font-quran text-lg font-bold text-white">ب</span>
+        <div className="flex items-center">
+          <div className="px-5 py-1.5 bg-white/15 rounded-full border border-white/20 backdrop-blur-sm shadow-inner transition-all hover:bg-white/20 cursor-default">
+             <h1 className="text-lg font-bold tracking-wide drop-shadow-sm text-white">{t.common.appName}</h1>
           </div>
-          <h1 className="text-xl font-bold tracking-wide drop-shadow-sm">{t.common.appName}</h1>
         </div>
         
         <div className="flex items-center gap-4">
@@ -84,11 +83,22 @@ export const Header: React.FC<HeaderProps> = ({ onNavigate, onSearch }) => {
                        <X size={16} />
                     </button>
                  </div>
-                 <div className="py-8 flex flex-col items-center justify-center text-center px-6">
-                    <div className="w-12 h-12 bg-slate-50 dark:bg-slate-700 rounded-full flex items-center justify-center text-slate-300 dark:text-slate-500 mb-3">
-                       <Inbox size={24} />
+                 
+                 <div className="py-2 max-h-80 overflow-y-auto no-scrollbar">
+                    {/* Share App Notification */}
+                    <div className="px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-700/50 border-b border-slate-50 dark:border-slate-700 last:border-0 transition-colors cursor-pointer">
+                       <div className="flex gap-3">
+                          <div className="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
+                             <HeartHandshake size={16} />
+                          </div>
+                          <div>
+                             <p className="text-sm text-slate-800 dark:text-slate-200 font-medium leading-snug">
+                                {t.common.shareAppNotification}
+                             </p>
+                             <span className="text-[10px] text-slate-400 mt-1 block">{t.common.justNow}</span>
+                          </div>
+                       </div>
                     </div>
-                    <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">{t.common.noNotifications}</p>
                  </div>
               </div>
             )}

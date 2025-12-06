@@ -5,11 +5,11 @@ import { ChatInterface } from './components/ChatInterface';
 import { HomeView } from './components/HomeView';
 import { SettingsView } from './components/SettingsView';
 import { HadithView } from './components/HadithView';
-import { CalendarView } from './components/CalendarView';
 import { QuranView } from './components/QuranView';
 import { FatwaView } from './components/FatwaView';
 import { SunnahView } from './components/SunnahView';
 import { HistoryView } from './components/HistoryView';
+import { ScholarsView } from './components/ScholarsView';
 import { AppView, QueryMode } from './types';
 import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
 
@@ -68,8 +68,8 @@ const AppContent = () => {
         return <HistoryView initialQuery={initialChatQuery?.text} />;
       case AppView.FATWA:
         return <FatwaView initialQuery={initialChatQuery?.text} />;
-      case AppView.CALENDAR:
-        return <CalendarView />;
+      case AppView.SCHOLARS:
+        return <ScholarsView initialQuery={initialChatQuery?.text} />;
       case AppView.SETTINGS:
         return <SettingsView isDarkMode={isDarkMode} toggleTheme={toggleTheme} />;
       default:
